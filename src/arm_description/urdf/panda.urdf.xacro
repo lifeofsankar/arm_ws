@@ -7,17 +7,17 @@
     <link name="panda_link0">
         <visual>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/visual/link0.dae" />
+                <mesh filename="package://arm_description/meshes/visual/link0.dae" />
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/collision/link0.stl" />
+                <mesh filename="package://arm_description/meshes/collision/link0.stl" />
             </geometry>
         </collision>
         <inertial>
           <origin xyz="-0.041018 -0.00014 0.049974" rpy="0 0 0" />
-          <mass value="20"/>
+          <mass value="0.629769"/>
           <inertia ixx="0.00315" iyy="0.00388" izz="0.004285" ixy="8.2904E-7" ixz="0.00015" iyz="8.2299E-6"/>
         </inertial>
     </link>
@@ -34,12 +34,12 @@
     <link name="panda_link1">
         <visual>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/visual/link1.dae" />
+                <mesh filename="package://arm_description/meshes/visual/link1.dae" />
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/collision/link1.stl" />
+                <mesh filename="package://arm_description/meshes/collision/link1.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -60,12 +60,12 @@
     <link name="panda_link2">
         <visual>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/visual/link2.dae" />
+                <mesh filename="package://arm_description/meshes/visual/link2.dae" />
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/collision/link2.stl" />
+                <mesh filename="package://arm_description/meshes/collision/link2.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -86,12 +86,12 @@
     <link name="panda_link3">
         <visual>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/visual/link3.dae" />
+                <mesh filename="package://arm_description/meshes/visual/link3.dae" />
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/collision/link3.stl" />
+                <mesh filename="package://arm_description/meshes/collision/link3.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -112,12 +112,12 @@
     <link name="panda_link4">
         <visual>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/visual/link4.dae" />
+                <mesh filename="package://arm_description/meshes/visual/link4.dae" />
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/collision/link4.stl" />
+                <mesh filename="package://arm_description/meshes/collision/link4.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -138,12 +138,12 @@
     <link name="panda_link5">
         <visual>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/visual/link5.dae" />
+                <mesh filename="package://arm_description/meshes/visual/link5.dae" />
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/collision/link5.stl" />
+                <mesh filename="package://arm_description/meshes/collision/link5.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -164,12 +164,12 @@
     <link name="panda_link6">
         <visual>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/visual/link6.dae" />
+                <mesh filename="package://arm_description/meshes/visual/link6.dae" />
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/collision/link6.stl" />
+                <mesh filename="package://arm_description/meshes/collision/link6.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -190,12 +190,12 @@
     <link name="panda_link7">
         <visual>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/visual/link7.dae" />
+                <mesh filename="package://arm_description/meshes/visual/link7.dae" />
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/collision/link7.stl" />
+                <mesh filename="package://arm_description/meshes/collision/link7.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -228,34 +228,34 @@
     <link name="panda_hand">
         <visual>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/visual/hand.dae" />
+                <mesh filename="package://arm_description/meshes/visual/hand.dae" />
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/collision/hand.stl" />
+                <mesh filename="package://arm_description/meshes/collision/hand.stl" />
             </geometry>
         </collision>
         <inertial>
           <origin xyz="-0.01 0 0.03" rpy="0 0 0" />
-          <mass value="0.73"/>
+          <mass value="0.3"/>
           <inertia ixx="0.001" iyy="0.0025" izz="0.0017" ixy="0" ixz="0" iyz="0"/>
         </inertial>
     </link>
     <link name="panda_leftfinger">
         <visual>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/visual/finger.dae" />
+                <mesh filename="package://arm_description/meshes/visual/finger.dae" />
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/collision/finger.stl" />
+                <mesh filename="package://arm_description/meshes/collision/finger.stl" />
             </geometry>
         </collision>
         <inertial>
           <origin xyz="0 0 0" rpy="0 0 0" />
-          <mass value="0.015"/>
+          <mass value="0.05"/>
           <inertia ixx="2.375E-6" iyy="2.375E-6" izz="7.5E-7" ixy="0" ixz="0" iyz="0"/>
         </inertial>
     </link>
@@ -263,18 +263,18 @@
         <visual>
             <origin rpy="0 0 3.14159265359" xyz="0 0 0" />
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/visual/finger.dae" />
+                <mesh filename="package://arm_description/meshes/visual/finger.dae" />
             </geometry>
         </visual>
         <collision>
             <origin rpy="0 0 3.14159265359" xyz="0 0 0" />
             <geometry>
-                <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/collision/finger.stl" />
+                <mesh filename="package://arm_description/meshes/collision/finger.stl" />
             </geometry>
         </collision>
         <inertial>
           <origin xyz="0 0 0" rpy="0 0 0" />
-          <mass value="0.15"/>
+          <mass value="0.05"/>
           <inertia ixx="2.375E-6" iyy="2.375E-6" izz="7.5E-7" ixy="0" ixz="0" iyz="0"/>
         </inertial>
     </link>
@@ -296,106 +296,73 @@
         <dynamics damping="0.3" />
     </joint>
     <!-- ROS Control -->
-    <ros2_control name="${name}" type="system">
-        <hardware>
-            <xacro:if value="${ros2_control_hardware_type == 'mock_components'}">
-                   <plugin>mock_components/GenericSystem</plugin>
-            </xacro:if>
-            <xacro:if value="${ros2_control_hardware_type == 'isaac'}">
-                <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
-                <param name="joint_commands_topic">/isaac_joint_commands</param>
-                <param name="joint_states_topic">/isaac_joint_states</param>
-            </xacro:if>
+    <ros2_control name="panda_ros2_control" type="system">
+    <hardware>
+         <plugin>gz_ros2_control/GazeboSimSystem</plugin>
         </hardware>
         <joint name="panda_joint1">
             <command_interface name="position"/>
             <state_interface name="position">
-              <param name="initial_value">${initial_positions['panda_joint1']}</param>
+              <param name="initial_value">0.0</param>
             </state_interface>
             <state_interface name="velocity">
               <param name="initial_value">0.0</param>
-              <param name="pid.p">80.0</param>
-              <param name="pid.i">3.0</param>
-              <param name="pid.d">10.0</param>
-              <param name="pid.i_clamp">50.0</param>
             </state_interface>
         </joint>
         <joint name="panda_joint2">
             <command_interface name="position"/>
             <state_interface name="position">
-              <param name="initial_value">${initial_positions['panda_joint2']}</param>
+              <param name="initial_value">-0.785</param>
             </state_interface>
             <state_interface name="velocity">
               <param name="initial_value">0.0</param>
-              <param name="pid.p">80.0</param>
-              <param name="pid.i">3.0</param>
-              <param name="pid.d">10.0</param>
-              <param name="pid.i_clamp">50.0</param>
             </state_interface>
         </joint>
         <joint name="panda_joint3">
             <command_interface name="position"/>
             <state_interface name="position">
-              <param name="initial_value">${initial_positions['panda_joint3']}</param>
+              <param name="initial_value">0</param>
             </state_interface>
             <state_interface name="velocity">
               <param name="initial_value">0.0</param>
-              <param name="pid.p">80.0</param>
-              <param name="pid.i">3.0</param>
-              <param name="pid.d">10.0</param>
-              <param name="pid.i_clamp">50.0</param>
             </state_interface>
         </joint>
         <joint name="panda_joint4">
             <command_interface name="position"/>
             <state_interface name="position">
-              <param name="initial_value">${initial_positions['panda_joint4']}</param>
+              <param name="initial_value">-2.356</param>
             </state_interface>
             <state_interface name="velocity">
               <param name="initial_value">0.0</param>
-              <param name="pid.p">80.0</param>
-              <param name="pid.i">3.0</param>
-              <param name="pid.d">10.0</param>
-              <param name="pid.i_clamp">50.0</param>
             </state_interface>
         </joint>
         <joint name="panda_joint5">
             <command_interface name="position"/>
             <state_interface name="position">
-              <param name="initial_value">${initial_positions['panda_joint5']}</param>
+              <param name="initial_value">0</param>
             </state_interface>
             <state_interface name="velocity">
               <param name="initial_value">0.0</param>
-              <param name="pid.p">80.0</param>
-          <param name="pid.i">3.0</param>
-          <param name="pid.d">10.0</param>
-          <param name="pid.i_clamp">50.0</param>
+
             </state_interface>
         </joint>
         <joint name="panda_joint6">
                 <command_interface name="position"/>
                 <state_interface name="position">
-                  <param name="initial_value">${initial_positions['panda_joint6']}</param>
+                  <param name="initial_value">1.571</param>
                 </state_interface>
                 <state_interface name="velocity">
                   <param name="initial_value">0.0</param>
-                  <param name="pid.p">80.0</param>
-      <param name="pid.i">3.0</param>
-      <param name="pid.d">10.0</param>
-      <param name="pid.i_clamp">50.0</param>
                 </state_interface>
             </joint>
             <joint name="panda_joint7">
                 <command_interface name="position"/>
                 <state_interface name="position">
-                  <param name="initial_value">${initial_positions['panda_joint7']}</param>
+                  <param name="initial_value">0.785</param>
                 </state_interface>
                 <state_interface name="velocity">
                   <param name="initial_value">0.0</param>
-                  <param name="pid.p">80.0</param>
-      <param name="pid.i">3.0</param>
-      <param name="pid.d">10.0</param>
-      <param name="pid.i_clamp">50.0</param>
+
                 </state_interface>
             </joint>
             <joint name="panda_finger_joint1">
@@ -417,11 +384,11 @@
             </joint>
         </ros2_control>
         
-    <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-      <parameters>/home/admin/First_ROS2/arm_ws/src/arm_gazebo/config/controller.yaml</parameters>
-      <hold_joints>true</hold_joints>
-      <controller_manager_node_name>controller_manager</controller_manager_node_name>
+<gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>/home/admin/First_ROS2/arm_ws/src/arm_gazebo/config/controller.yaml</parameters>
     </plugin>
+</gazebo>
     <!--  -->
     
 </robot>
