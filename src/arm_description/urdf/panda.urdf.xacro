@@ -29,7 +29,6 @@
         <child link="panda_link0"/>
         <origin xyz="0.0 0 0" rpy="0 0 0"/>
     </joint>
-    <virtual_joint name="fixed_frame" type="fixed" parent_frame="panda_link0" child_link="panda_link0" />
     <!--  -->
     <link name="panda_link1">
         <visual>

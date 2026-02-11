@@ -4,6 +4,7 @@
 <!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->
 <!-- =================================================================================== -->
 <robot name = "camera_sensor">
+
   <link name="torso_link">
     <inertial>
       <origin xyz="0 0 0.50"/>
@@ -41,22 +42,25 @@
       </geometry>
     </collision>
   </link>
+
   <link name ="world"/>
   <joint name="base_link_to_torso_link" type="fixed">
     <parent link="world"/>
     <child link="torso_link"/>
     <origin rpy="0 0 0" xyz="0.22 -0.30 0"/>
   </joint>
+
   <joint name="camera_head_joint" type="fixed">
     <parent link="torso_link"/>
     <child link="camera_head_link"/>
     <origin rpy="0 0.35 -0.15" xyz="0 0.01 1.2"/>
   </joint>
+
   <link name="camera_head_link">
     <visual>
       <origin rpy="1.5707963267948966 0.0 1.5707963267948966" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="/home/admin/First_ROS2/arm_ws/src/arm_description/meshes/collision/d435.stl"/>
+        <mesh filename="package://arm_description/meshes/collision/d435.stl"/>
       </geometry>
       <material name="aluminum">
         <color rgba="0.5 0.5 0.5 1"/>
@@ -74,54 +78,63 @@
       <inertia ixx="0.003881243" ixy="0.0" ixz="0.0" iyy="0.000498940" iyz="0.0" izz="0.003879257"/>
     </inertial>
   </link>
+
   <joint name="camera_head_depth_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <parent link="camera_head_link"/>
     <child link="camera_head_depth_frame"/>
   </joint>
   <link name="camera_head_depth_frame"/>
+
   <joint name="camera_head_depth_optical_joint" type="fixed">
     <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
     <parent link="camera_head_depth_frame"/>
     <child link="camera_head_depth_optical_frame"/>
   </joint>
   <link name="camera_head_depth_optical_frame"/>
+
   <joint name="camera_head_infra1_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0.0 0"/>
     <parent link="camera_head_link"/>
     <child link="camera_head_infra1_frame"/>
   </joint>
   <link name="camera_head_infra1_frame"/>
+
   <joint name="camera_head_infra1_optical_joint" type="fixed">
     <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
     <parent link="camera_head_infra1_frame"/>
     <child link="camera_head_infra1_optical_frame"/>
   </joint>
   <link name="camera_head_infra1_optical_frame"/>
+
   <joint name="camera_head_infra2_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 -0.05 0"/>
     <parent link="camera_head_link"/>
     <child link="camera_head_infra2_frame"/>
   </joint>
   <link name="camera_head_infra2_frame"/>
+
   <joint name="camera_head_infra2_optical_joint" type="fixed">
     <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
     <parent link="camera_head_infra2_frame"/>
     <child link="camera_head_infra2_optical_frame"/>
   </joint>
   <link name="camera_head_infra2_optical_frame"/>
+
   <joint name="camera_head_color_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0.015 0"/>
     <parent link="camera_head_link"/>
     <child link="camera_head_color_frame"/>
   </joint>
   <link name="camera_head_color_frame"/>
+
   <joint name="camera_head_color_optical_joint" type="fixed">
     <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
     <parent link="camera_head_color_frame"/>
     <child link="camera_head_color_optical_frame"/>
   </joint>
   <link name="camera_head_color_optical_frame"/>
+
   <gazebo reference="camera_head_link">
     <sensor name="camera_head" type="rgbd_camera">
       <camera>
