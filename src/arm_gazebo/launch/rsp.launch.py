@@ -8,12 +8,14 @@ from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, Comm
 def generate_launch_description():
 
     # Package name
-    package_name = FindPackageShare("arm_description")
+    # package_name = FindPackageShare("arm_description")
 
     # Default robot description if none is specified
-    urdf_path = "/home/admin/First_ROS2/arm_ws/src/arm_description/urdf/panda.urdf.xacro"
-    with open(urdf_path, 'r') as file:
-        robot_description = file.read()
+    # urdf_path = "/home/admin/First_ROS2/arm_ws/src/arm_description/urdf/panda.urdf.xacro"
+    # with open(urdf_path, 'r') as file:
+    #     robot_description = file.read()
+    urdf = LaunchConfiguration('urdf')
+# 
     # Launch configurations
     use_sim_time = LaunchConfiguration('use_sim_time')
 
@@ -22,10 +24,17 @@ def generate_launch_description():
             'use_sim_time', default_value='false',
             description='Use sim time if true')
 
-    declare_urdf = DeclareLaunchArgument(
-            name='sdf', default_value=urdf_path,
-            description='Path to the robot description file')
+    # declare_urdf = DeclareLaunchArgument(
+    #         name='sdf', default_value=urdf_path,
+    #         description='Path to the robot description file')
 
+    declare_urdf = DeclareLaunchArgument(
+        'urdf',
+        description='Path to robot URDF/Xacro file'
+    )
+
+    robot_description = Command(['xacro ', urdf])
+    
     # Create a robot state publisher 
     robot_state_pub = Node(
         package='robot_state_publisher',
@@ -40,7 +49,7 @@ def generate_launch_description():
 
     # Launch!
     return LaunchDescription([
-        declare_urdf,
         declare_use_sim_time,
+        declare_urdf,
         robot_state_pub
     ])

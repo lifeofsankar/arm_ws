@@ -28,17 +28,17 @@ def generate_launch_description():
     
     # Launch Robot State Publisher Node
     sdf_path = "/home/admin/First_ROS2/arm_ws/src/arm_description/urdf/panda.urdf.xacro"
-    camera_path = "/home/admin/First_ROS2/arm_ws/src/arm_description/urdf/camera.urdf"
+    # camera_path = "/home/admin/First_ROS2/arm_ws/src/arm_description/urdf/camera.urdf"
     rsp = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
             get_package_share_directory(package_name),'launch','rsp.launch.py'
         )]), launch_arguments={'use_sim_time': 'true', 'urdf': sdf_path}.items()
     )
-    rsp2 = IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([os.path.join(
-                get_package_share_directory(package_name),'launch','rsp.launch.py'
-            )]), launch_arguments={'use_sim_time': 'true', 'urdf': camera_path}.items()
-    )
+    # rsp2 = IncludeLaunchDescription(
+    #         PythonLaunchDescriptionSource([os.path.join(
+    #             get_package_share_directory(package_name),'launch','rsp.launch.py'
+    #         )]), launch_arguments={'use_sim_time': 'true', 'urdf': camera_path}.items()
+    # )
     # Launch the gazebo server to initialize the simulation
     gazebo_server = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
@@ -63,15 +63,15 @@ def generate_launch_description():
         ],
         output='screen'
     )
-    spawn_camera = ExecuteProcess(
-        cmd=[
-            'ros2', 'run', 'ros_gz_sim', 'create',
-            '-name', 'camera',
-            '-file', camera_path,
-            '-x', '0.0', '-y', '0.5', '-z', '0.0'
-        ],
-        output='screen'
-    )
+    # spawn_camera = ExecuteProcess(
+    #     cmd=[
+    #         'ros2', 'run', 'ros_gz_sim', 'create',
+    #         '-name', 'camera',
+    #         '-file', camera_path,
+    #         '-x', '0.0', '-y', '0.5', '-z', '0.0'
+    #     ],
+    #     output='screen'
+    # )
     # Launch the Gazebo-ROS bridge
     bridge_params = "/home/admin/First_ROS2/arm_ws/src/arm_description/config/gz_bridge.yaml"
     ros_gz_bridge = Node(
@@ -97,9 +97,22 @@ def generate_launch_description():
         package='tf2_ros',
         executable='static_transform_publisher',
         arguments=[
-            '0', '0','0','0','0','0','panda_link0','world'],
-        parameters=[{'use_sim_time': True}]  # Add this line
+            '0','0','0','0','0','0',
+            'world','panda_link0'
+        ],
+        parameters=[{'use_sim_time': True}]
     )
+    
+    # static_camera = Node(
+    #     package='tf2_ros',
+    #     executable='static_transform_publisher',
+    #     arguments=[
+    #         '0','0.5','0',
+    #         '0','0','0',
+    #         'world','camera_base_link'
+    #     ],
+    #     parameters=[{'use_sim_time': True}]
+    # )
     
     # Launch them all!
     return LaunchDescription([
@@ -108,11 +121,12 @@ def generate_launch_description():
         declare_world,
         # Launch the nodes
         rsp,
-        rsp2,
+        # rsp2,
         gazebo_server,
         gazebo_client,
         ros_gz_bridge,
         spawn_entity,
-        spawn_camera,
-        static1,
+        # spawn_camera,
+        static1,  # world → panda_link0
+        # static_camera  # world → camera_base_link
     ])

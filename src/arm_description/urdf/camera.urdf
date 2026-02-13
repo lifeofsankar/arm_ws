@@ -5,56 +5,54 @@
 <!-- =================================================================================== -->
 <robot name = "camera_sensor">
 
-  <link name="torso_link">
-    <inertial>
-      <origin xyz="0 0 0.50"/>
-      <mass value="2.5"/>
-      <inertia ixx="0.8" ixy="0.0" ixz="0.0" iyy="0.8" iyz="0.0" izz="0.8"/>
-    </inertial>
+  <link name="camera_base_link">
+
     <visual name="holder">
-      <origin rpy="0 0 0" xyz="0 0 0.25"/>
+      <origin rpy="0 0 0" xyz="-0.5 -0.5 0.5"/>
       <material name="LightGrey">
         <color rgba="0.7 0.7 0.7 1.0"/>
       </material>
       <geometry>
-        <cylinder length="2.0" radius="0.005"/>
-      </geometry>
-    </visual>
-    <visual name="base">
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <material name="LightGrey">
-        <color rgba="0.7 0.7 0.7 1.0"/>
-      </material>
-      <geometry>
-        <box size="0.15 0.10 0.06"/>
+        <cylinder length="1.0" radius="0.005"/>
       </geometry>
     </visual>
     <collision name="holder">
-      <origin rpy="0 0 0" xyz="0 0 0.25"/>
+      <origin rpy="0 0 0" xyz="-0.5 -0.5 0.5"/>
       <geometry>
-        <cylinder length="2.0" radius="0.005"/>
+        <cylinder length="1.0" radius="0.005"/>
       </geometry>
     </collision>
+  
+    <visual name="base">
+      <origin rpy="0 0 0" xyz="-0.5 -0.5 0"/>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+      <geometry>
+        <box size="0.15 0.10 0.06"/>
+      </geometry>
+    </visual>
     <collision name="base">
-      <origin rpy="0 0 0" xyz="0 0 0.0"/>
+      <origin rpy="0 0 0" xyz="-0.5 -0.5 0.0"/>
       <geometry>
         <box size="0.15 0.10 0.06"/>
       </geometry>
     </collision>
+
+    <inertial>
+      <origin xyz="-0.5 -0.5 0.50"/>
+      <mass value="2.5"/>
+      <inertia ixx="0.8" ixy="0.0" ixz="0.0" iyy="0.8" iyz="0.0" izz="0.8"/>
+    </inertial>
   </link>
 
-  <link name ="world"/>
-  <joint name="base_link_to_torso_link" type="fixed">
+  <!-- <link name ="world"/>
+  <joint name="world_to_camera_base_link" type="fixed">
     <parent link="world"/>
-    <child link="torso_link"/>
-    <origin rpy="0 0 0" xyz="0.22 -0.30 0"/>
-  </joint>
+    <child link="camera_base_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint> -->
 
-  <joint name="camera_head_joint" type="fixed">
-    <parent link="torso_link"/>
-    <child link="camera_head_link"/>
-    <origin rpy="0 0.35 -0.15" xyz="0 0.01 1.2"/>
-  </joint>
 
   <link name="camera_head_link">
     <visual>
@@ -79,6 +77,12 @@
     </inertial>
   </link>
 
+  <joint name="camera_head_joint" type="fixed">
+    <parent link="camera_base_link"/>
+    <child link="camera_head_link"/>
+    <origin rpy="0 0 0" xyz="-0.49 -0.5 1"/>
+  </joint>
+  
   <joint name="camera_head_depth_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <parent link="camera_head_link"/>
