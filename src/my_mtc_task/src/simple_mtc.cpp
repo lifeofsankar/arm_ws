@@ -29,7 +29,7 @@ int main(int argc, char** argv)
   // MoveTo Stage
   auto move = std::make_unique<mtc::stages::MoveTo>("move_to_ready", sampling_planner);
   move->setGroup(group);
-  move->setGoal("pose2");  // ⚠️ change to your named target
+  move->setGoal("pose1");  // ⚠️ change to your named target
   task.add(std::move(move));
 
   try

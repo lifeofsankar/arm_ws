@@ -8,21 +8,33 @@ def generate_launch_description():
         "panda", package_name="arm_moveit_config"
     ).to_moveit_configs()
 
+    # Define the list of capabilities MoveGroup should offer.
+    # We MUST include 'ExecuteTaskSolutionCapability' for MTC to work.
+    move_group_capabilities = {
+        "capabilities": "move_group/ExecuteTaskSolutionCapability "
+                        "move_group/MoveGroupKinematicsService "
+                        "move_group/MoveGroupMoveAction "
+                        "move_group/MoveGroupPlanService "
+                        "move_group/MoveGroupQueryPlannersService "
+                        "move_group/MoveGroupStateValidationService "
+                        "move_group/MoveGroupGetPlanningSceneService "
+                        "move_group/ApplyPlanningSceneService "
+                        "move_group/ClearOctomapService "
+    }
+
     # 2. Move Group Node
-    # This acts as the "brain" that calculates paths.
-    # It communicates with the controllers already running in Gazebo.
     move_group_node = Node(
         package="moveit_ros_move_group",
         executable="move_group",
         output="screen",
         parameters=[
             moveit_config.to_dict(),
-            {"use_sim_time": True},  # CRITICAL: Sync with Gazebo time
+            move_group_capabilities, # <--- Added this!
+            {"use_sim_time": True},
         ],
     )
 
     # 3. RViz Node
-    # Visualization tool.
     rviz_config_file = moveit_config.package_path / "config/moveit.rviz"
     rviz_node = Node(
         package="rviz2",
@@ -35,7 +47,7 @@ def generate_launch_description():
             moveit_config.robot_description_semantic,
             moveit_config.planning_pipelines,
             moveit_config.robot_description_kinematics,
-            {"use_sim_time": True}, # CRITICAL: Sync with Gazebo time
+            {"use_sim_time": True},
         ],
     )
 
