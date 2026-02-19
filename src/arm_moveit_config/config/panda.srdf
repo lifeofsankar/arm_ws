@@ -54,6 +54,15 @@
         <joint name="panda_joint6" value="2.1695"/>
         <joint name="panda_joint7" value="-0.6563"/>
     </group_state>
+    <group_state name="pose3" group="arm">
+        <joint name="panda_joint1" value="0"/>
+        <joint name="panda_joint2" value="0"/>
+        <joint name="panda_joint3" value="0"/>
+        <joint name="panda_joint4" value="-0.5"/>
+        <joint name="panda_joint5" value="-0.1121"/>
+        <joint name="panda_joint6" value="1.9404"/>
+        <joint name="panda_joint7" value="0.9444"/>
+    </group_state>
     <group_state name="open" group="gripper">
         <joint name="panda_finger_joint1" value="0.04"/>
     </group_state>
@@ -103,4 +112,6 @@
     <disable_collisions link1="panda_link6" link2="panda_link7" reason="Adjacent"/>
     <disable_collisions link1="panda_link6" link2="panda_rightfinger" reason="Never"/>
     <disable_collisions link1="panda_link7" link2="panda_rightfinger" reason="Never"/>
+    <!--  -->
+    <disable_collisions link1="camera_base_link" link2="camera_head_link" reason="Adjacent"/> 
 </robot>

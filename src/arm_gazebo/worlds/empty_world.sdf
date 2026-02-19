@@ -67,7 +67,7 @@
     <!-- This is your painting surface -->
     <model name="wall">
       <static>true</static>
-      <pose>1.4 0 0.75 0 0 0</pose>
+      <pose>0.8 0 0.75 0 0 0</pose>
 
       <link name="wall_link">
         <collision name="collision">
