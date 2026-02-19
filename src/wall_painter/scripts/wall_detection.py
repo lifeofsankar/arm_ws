@@ -4,6 +4,7 @@ from sensor_msgs.msg import PointCloud2
 from moveit_msgs.msg import CollisionObject
 from shape_msgs.msg import SolidPrimitive
 from geometry_msgs.msg import Pose
+from std_msgs.msg import Float64
 import sensor_msgs_py.point_cloud2 as pc2
 import numpy as np
 import math
@@ -17,6 +18,8 @@ class WallDetector(Node):
             PointCloud2, '/depth_camera/points', self.listener_callback, 10)
             
         self.publisher = self.create_publisher(CollisionObject, '/collision_object', 10)
+        # NEW: Create a topic to shout the wall's X position to C++
+        self.target_pub = self.create_publisher(Float64, '/wall_target_x', 10)
         self.wall_found = False
 
         # Setup TF listener to find the camera's location
@@ -24,14 +27,10 @@ class WallDetector(Node):
         self.tf_listener = tf2_ros.TransformListener(self.tf_buffer, self)
 
     def listener_callback(self, msg):
-        if self.wall_found:
-            return
-
         points = list(pc2.read_points(msg, field_names=("x", "y", "z"), skip_nans=True))
         if not points:
             return
 
-        # X is the forward depth from the camera lens
         x_vals = [p[0] for p in points if not math.isinf(p[0]) and 0.2 < p[0] < 3.0]
         if not x_vals:
             return
@@ -39,23 +38,25 @@ class WallDetector(Node):
         avg_depth = np.median(x_vals)
 
         try:
-            # Ask TF: "Where is the camera in the world?"
             trans = self.tf_buffer.lookup_transform('world', msg.header.frame_id, rclpy.time.Time())
             camera_x = trans.transform.translation.x
-
-            # Math: Camera Position + Depth = Wall Position
             wall_world_x = camera_x + avg_depth
 
-            self.publish_wall(wall_world_x)
-            self.wall_found = True
-            
-            self.get_logger().info(f'Camera is at World X: {camera_x:.2f}m')
-            self.get_logger().info(f'Detected Depth: {avg_depth:.2f}m')
-            self.get_logger().info(f'Spawning wall in WORLD at X: {wall_world_x:.2f}m')
+            # NEW: ALWAYS shout the coordinate so C++ can hear it anytime!
+            x_msg = Float64()
+            x_msg.data = wall_world_x
+            self.target_pub.publish(x_msg)
+
+            # Only spawn the green box the first time so RViz doesn't flicker
+            if not self.wall_found:
+                self.publish_wall(wall_world_x)
+                self.wall_found = True
+                self.get_logger().info(f'Spawning wall in WORLD at X: {wall_world_x:.2f}m')
 
         except Exception as e:
-            self.get_logger().warn(f'Waiting for TF transform... {e}')
-
+            # Hide the TF warning so it doesn't spam your terminal
+            pass
+            
     def publish_wall(self, world_x):
         wall = CollisionObject()
         wall.header.frame_id = "world" # WE ARE BACK IN THE WORLD FRAME!
@@ -76,6 +77,11 @@ class WallDetector(Node):
         wall.operation = CollisionObject.ADD
 
         self.publisher.publish(wall)
+        
+        # NEW: Publish the exact X coordinate for C++
+        # x_msg = Float64()
+        # x_msg.data = world_x
+        # self.target_pub.publish(x_msg)
 
 def main(args=None):
     rclpy.init(args=args)

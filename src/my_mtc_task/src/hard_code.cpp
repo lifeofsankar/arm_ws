@@ -1,4 +1,5 @@
 #include <rclcpp/rclcpp.hpp>
+#include <std_msgs/msg/float64.hpp>
 #include <moveit/task_constructor/task.h>
 #include <moveit/task_constructor/stages/current_state.h>
 #include <moveit/task_constructor/stages/move_to.h>
@@ -11,7 +12,7 @@
 using namespace moveit::task_constructor;
 
 // Update signature to accept the Node
-Task createTask(rclcpp::Node::SharedPtr node) {
+Task createTask(rclcpp::Node::SharedPtr node, double wall_x) {
     Task t;
     t.stages()->setName("Trace Wall Task");
     t.loadRobotModel(node); // Helpful to explicitly load the model using the node
@@ -57,7 +58,7 @@ Task createTask(rclcpp::Node::SharedPtr node) {
     //     t.add(std::move(stage));
     // }
 
-// 4. Move to "Safe Start" Pose
+    // 4. Move to "Safe Start" Pose
     {
         auto stage = std::make_unique<stages::MoveTo>("move_to_start", sampling_planner);
         stage->setGroup("arm");
@@ -65,13 +66,12 @@ Task createTask(rclcpp::Node::SharedPtr node) {
         geometry_msgs::msg::PoseStamped start_pose;
         start_pose.header.frame_id = "world";
         
-        // POSITION: Comfortable reaching distance
-        start_pose.pose.position.x = 0.5; 
+        // FIX: Start the wrist 30cm away from the wall to make room for fingers
+        start_pose.pose.position.x = wall_x - 0.30; 
         start_pose.pose.position.y = 0.0;
         start_pose.pose.position.z = 0.5;
         
-        // ORIENTATION: Rotated 90 degrees around Y (Pointing Forward +X)
-        // This is the "magic number" to point the gripper at the wall
+        // Point gripper forward
         start_pose.pose.orientation.w = 0.707;
         start_pose.pose.orientation.x = 0.0;
         start_pose.pose.orientation.y = 0.707;
@@ -85,7 +85,11 @@ Task createTask(rclcpp::Node::SharedPtr node) {
     {
         auto stage = std::make_unique<stages::MoveRelative>("approach_wall", cartesian_planner);
         stage->setGroup("arm");
-        stage->setMinMaxDistance(0.05, 0.2); 
+        
+        // FIX: Move forward exactly 18cm. 
+        // 30cm start - 18cm move = Wrist stops 12cm away from wall.
+        // Fingers are ~11cm long, leaving a 1cm "painting" gap!
+        stage->setMinMaxDistance(0.08, 0.11); 
         
         geometry_msgs::msg::Vector3Stamped direction;
         direction.header.frame_id = "world";
@@ -134,12 +138,31 @@ int main(int argc, char** argv) {
 
     spinning_thread.detach();
     
-    // Pass the node to the function
-    auto task = createTask(node);
+    // --- NEW: Listen for Python's wall coordinate ---
+    double detected_wall_x = 0.0;
+    bool wall_received = false;
+    
+    auto sub = node->create_subscription<std_msgs::msg::Float64>(
+        "/wall_target_x", 10,
+        [&](const std_msgs::msg::Float64::SharedPtr msg) {
+            detected_wall_x = msg->data;
+            wall_received = true;
+        });
+
+    RCLCPP_INFO(node->get_logger(), "Waiting for Python wall detection...");
+    
+    // Pause the program until Python sends the message
+    while (!wall_received && rclcpp::ok()) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+    
+    RCLCPP_INFO(node->get_logger(), "Received Wall X: %f. Generating Plan!", detected_wall_x);
+    // -------------------------------------------------
+
+    // Pass the node and the detected coordinate to the function
+    auto task = createTask(node, detected_wall_x);
 
     try {
-        // FIX 3: init() is now void. It will throw an exception if it fails.
-        // We do not put it inside an 'if' statement anymore.
         task.init(); 
         
         if (task.plan(5)) { 
