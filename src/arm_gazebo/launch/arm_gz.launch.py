@@ -15,7 +15,7 @@ def generate_launch_description():
     urdf = os.path.join(
         get_package_share_directory('arm_description'),
         'urdf',
-        'arm.urdf.xacro'
+        'panda.urdf.xacro'
     )
 
     return LaunchDescription([
