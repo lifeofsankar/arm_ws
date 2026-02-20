@@ -99,22 +99,61 @@ Task createTask(rclcpp::Node::SharedPtr node, double wall_x) {
     }
 
     // 6. Trace/Paint the Wall (Linear Motion)
-    {
-        auto stage = std::make_unique<stages::MoveRelative>("paint_stripe", cartesian_planner);
-        stage->setGroup("arm");
+    // {
+    //     auto stage = std::make_unique<stages::MoveRelative>("paint_stripe", cartesian_planner);
+    //     stage->setGroup("arm");
         
-        // CHANGE THIS LINE: Reduce the required distance
-        // Old: stage->setMinMaxDistance(0.3, 0.5);
-        stage->setMinMaxDistance(0.15, 0.3); 
+    //     // CHANGE THIS LINE: Reduce the required distance
+    //     // Old: stage->setMinMaxDistance(0.3, 0.5);
+    //     stage->setMinMaxDistance(0.15, 0.3); 
+        
+    //     geometry_msgs::msg::Vector3Stamped direction;
+    //     direction.header.frame_id = "world";
+    //     direction.vector.y = -1.0; 
+    //     stage->setDirection(direction);
+
+    //     t.add(std::move(stage));
+    // }
+    
+    // 6a. Paint Stripe Right (Move along -Y)
+    {
+        auto stage = std::make_unique<stages::MoveRelative>("paint_right", cartesian_planner);
+        stage->setGroup("arm");
+        stage->setMinMaxDistance(0.15, 0.25); 
         
         geometry_msgs::msg::Vector3Stamped direction;
         direction.header.frame_id = "world";
-        direction.vector.y = -1.0; 
+        direction.vector.y = -1.0; // Negative Y is Right
         stage->setDirection(direction);
-
         t.add(std::move(stage));
     }
 
+    // 6b. Move Down to start the next stripe (Move along -Z)
+    {
+        auto stage = std::make_unique<stages::MoveRelative>("move_down", cartesian_planner);
+        stage->setGroup("arm");
+        stage->setMinMaxDistance(0.05, 0.10); // Drop down 5 to 10 cm
+        
+        geometry_msgs::msg::Vector3Stamped direction;
+        direction.header.frame_id = "world";
+        direction.vector.z = -1.0; // Negative Z is Down
+        stage->setDirection(direction);
+        t.add(std::move(stage));
+    }
+
+    // 6c. Paint Stripe Left (Move along +Y)
+    {
+        auto stage = std::make_unique<stages::MoveRelative>("paint_left", cartesian_planner);
+        stage->setGroup("arm");
+        stage->setMinMaxDistance(0.15, 0.25); 
+        
+        geometry_msgs::msg::Vector3Stamped direction;
+        direction.header.frame_id = "world";
+        direction.vector.y = 1.0; // Positive Y is Left!
+        stage->setDirection(direction);
+        t.add(std::move(stage));
+    }
+    
     // 7. Retreat
     {
         auto stage = std::make_unique<stages::MoveRelative>("retreat", cartesian_planner);
