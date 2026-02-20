@@ -20,4 +20,10 @@ install(PROGRAMS
   scripts/wall_detection.py
   DESTINATION lib/${PROJECT_NAME}
 )
+
+install(PROGRAMS
+  scripts/full_wall_detection.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 ament_package()

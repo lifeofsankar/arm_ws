@@ -30,12 +30,23 @@ ament_target_dependencies(hard_code
   moveit_ros_planning_interface
 )
 
+add_executable(auto_painter src/auto_painter.cpp)
+ament_target_dependencies(auto_painter
+  rclcpp
+  moveit_task_constructor_core
+  rclcpp_action
+  geometry_msgs
+)
+
 install(
   DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}
 )
 
-install(TARGETS simple_mtc hard_code
+install(TARGETS 
+  simple_mtc
+  hard_code
+  auto_painter
   DESTINATION lib/${PROJECT_NAME})
 
 ament_package()
