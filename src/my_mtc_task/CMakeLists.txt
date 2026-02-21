@@ -38,6 +38,14 @@ ament_target_dependencies(auto_painter
   geometry_msgs
 )
 
+add_executable(pick_and_place src/pick_and_place.cpp)
+ament_target_dependencies(pick_and_place
+  rclcpp
+  moveit_task_constructor_core
+  rclcpp_action
+  geometry_msgs
+)
+
 install(
   DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}
@@ -47,6 +55,7 @@ install(TARGETS
   simple_mtc
   hard_code
   auto_painter
+  pick_and_place
   DESTINATION lib/${PROJECT_NAME})
 
 ament_package()

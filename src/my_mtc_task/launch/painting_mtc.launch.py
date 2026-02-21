@@ -13,9 +13,11 @@ def generate_launch_description():
     # We do NOT launch move_group or rviz here because they are already running in Terminal 2.
     mtc_node = Node(
         package="my_mtc_task",
+
         # executable="simple_mtc",
         # executable="hard_code",
         executable="auto_painter",
+
         output="screen",
         parameters=[
             moveit_config.to_dict(),

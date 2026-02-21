@@ -12,16 +12,10 @@ find_package(moveit_ros_planning_interface REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
 install(PROGRAMS
-  scripts/paint_test.py
-  DESTINATION lib/${PROJECT_NAME}
-)
-
-install(PROGRAMS
+  # scripts/paint_test.py
+  # scripts/generate_waypoints.py
   scripts/wall_detection.py
-  DESTINATION lib/${PROJECT_NAME}
-)
-
-install(PROGRAMS
+  scripts/object_spawner.py
   scripts/full_wall_detection.py
   DESTINATION lib/${PROJECT_NAME}
 )
