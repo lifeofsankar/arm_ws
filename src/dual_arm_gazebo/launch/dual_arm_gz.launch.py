@@ -9,13 +9,13 @@ def generate_launch_description():
     world = os.path.join(
         get_package_share_directory('arm_gazebo'),
         'worlds',
-        'empty_world.sdf'
+        'empty.sdf'
     )
 
     urdf = os.path.join(
         get_package_share_directory('arm_description'),
         'urdf',
-        'panda.urdf.xacro'
+        'ur.urdf.xacro'
     )
 
     return LaunchDescription([
@@ -52,7 +52,7 @@ def generate_launch_description():
             arguments=[
                 '-topic', 'robot_description',
                 '-name', 'six_axis_arm',
-                '-z', '0.2'
+                # '-z', '0.2'
             ],
             output='screen'
         ),
